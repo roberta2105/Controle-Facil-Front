@@ -1,0 +1,13 @@
+#root {
+  margin: 0 auto;
+  text-align: center;
+}
+
+.nav-personaliza {
+  height: 90px;
+  font-size: larger;
+  padding: 3rem;
+  column-gap: 150px;
+}
+
+
