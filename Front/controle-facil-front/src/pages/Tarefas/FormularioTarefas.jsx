@@ -1,24 +1,22 @@
 import { Box, Button, TextField, Typography } from "@mui/material"
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
-import axios from 'axios';
+import http from "../../http/http"
 
 
 const FormularioTarefas = () => {
 
     const [nomeTarefa, setNomeTarefa] = useState('')
     const [descricao, setDescricao] = useState('')
-    const [status, setStatus] = useState('')
 
     const parametros = useParams()
 
     useEffect(() => {
         if (parametros.id) {
-            axios.get(`https://654eaeda358230d8f0ccc8a2.mockapi.io/Tarefa/${parametros.id}/`)
+            http.get(`naturezasdelancamento/${parametros.id}/`)
                 .then(resposta => {
-                    setNomeTarefa(resposta.data.Titulo),
-                        setDescricao(resposta.data.Descricao),
-                        setStatus(resposta.data.Status)
+                    setNomeTarefa(resposta.data.descricao),
+                        setDescricao(resposta.data.observacao)
                 })
 
                 .catch(error => console.error('Erro ao buscar tarefa:', error));
@@ -36,19 +34,17 @@ const FormularioTarefas = () => {
 
 
         if (parametros.id) {
-            axios.put(`https://654eaeda358230d8f0ccc8a2.mockapi.io/Tarefa/${parametros.id}/`, {
-                Titulo: nomeTarefa,
-                Descricao: descricao,
-                Status: status
+            http.put(`naturezasdelancamento/${parametros.id}/`, {
+                descricao: nomeTarefa,
+                observacao: descricao,
             })
                 .then(() => {
                     alert("Tarefa atualizada com sucesso!")
                 })
         } else {
-            axios.post('https://654eaeda358230d8f0ccc8a2.mockapi.io/Tarefa/', {
-                Titulo: nomeTarefa,
-                Descricao: descricao,
-                Status: status
+            http.post('naturezasdelancamento', {
+                descricao: nomeTarefa,
+                observacao: descricao,
             })
                 .then(() => {
                     alert("Tarefa cadastrada com sucesso!")
@@ -73,15 +69,6 @@ const FormularioTarefas = () => {
                     value={descricao}
                     onChange={evento => setDescricao(evento.target.value)}
                     label="Descrição"
-                    variant="standard"
-                    fullWidth
-                    required
-                    margin="dense"
-                />
-                <TextField
-                    value={status}
-                    onChange={evento => setStatus(evento.target.value)}
-                    label="Status"
                     variant="standard"
                     fullWidth
                     required

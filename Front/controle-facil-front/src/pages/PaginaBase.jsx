@@ -7,20 +7,20 @@ const PaginaBase = () => {
 
     return (
         <>
-            <AppBar position="static">
+            <AppBar position="static" sx={{ backgroundColor: '#028971' }}>
                 <Container maxWidth="xl">
                     <Toolbar>
                         <Typography variant="h6">
                             Controle Fácil
                         </Typography>
                         <Box sx={{ display: 'flex', flexGrow: 3 , columnGap: '30px', marginLeft: '50px'}}>
-                            <Link component={RouterLink} to="/Tarefa">
-                                <Button sx={{ my: 1, color: 'white', backgroundColor: '#9400D3' }}>
+                            <Link component={RouterLink} to="/naturezasdelancamento">
+                                <Button sx={{ my: 1, color: 'white', backgroundColor: '#2fae93db' }}>
                                     Lançamentos 
                                 </Button>
                             </Link>
-                            <Link component={RouterLink} to="/Tarefa/novo">
-                                <Button sx={{ my: 1, color: 'white', backgroundColor: '#9400D3' }}>
+                            <Link component={RouterLink} to="/naturezasdelancamento/novo">
+                                <Button sx={{ my: 1, color: 'white', backgroundColor: '#2fae93db' }}>
                                     Novo Lançamento
                                 </Button>
                             </Link>

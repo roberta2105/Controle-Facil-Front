@@ -1,0 +1,47 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.formulario {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    align-content: center;
+    height: 720px;
+ 
+}
+
+.titulo {
+    padding: 80px;
+    color: #028971;
+}
+
+
+.login-container {
+    display: flex;
+    width: 100%;
+  }
+  
+  .imagem-container {
+    flex: 1; /* A imagem ocupa metade da largura */
+  }
+  
+  .form-container {
+    flex: 1; /* O formulário ocupa a outra metade da largura */
+  }
+
+  img {
+    max-width: 100%; /* A imagem não vai além de 100% da largura do contêiner pai */
+    height: auto; /* Mantém a proporção da imagem */
+    display: block; /* Para evitar espaços em branco em torno da imagem */
+    
+   
+  }
+
+  @media (max-width: 770px) {
+    img {
+      display: none;
+    }
+  }

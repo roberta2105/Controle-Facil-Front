@@ -1,10 +1,10 @@
 import { useState } from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useEffect } from 'react';
-import axios from 'axios';
 import { Link } from "react-router-dom"
 import { FaEdit } from "react-icons/fa";
 import { RiDeleteBin2Line } from "react-icons/ri";
+import http from "../../http/http"
 
 
 import { Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material"
@@ -22,13 +22,13 @@ const Administracao = () => {
 
     //Faz uma consulta aos dados de Tarefa
     useEffect(() => {
-        axios.get('https://654eaeda358230d8f0ccc8a2.mockapi.io/Tarefa')
+        http.get('naturezasdelancamento')
             .then(resposta => setTarefas(resposta.data))
             .catch(error => console.error('Erro ao buscar tarefas:', error));
     }, []);
 
     const excluir = (tarefaExcluida) => {
-        axios.delete(`https://654eaeda358230d8f0ccc8a2.mockapi.io/Tarefa/${tarefaExcluida.id}/`)
+        http.delete(`naturezasdelancamento/${tarefaExcluida.id}`)
         .then(() => {
             const listaTarefa = tarefas.filter(Tarefa => Tarefa.id !== tarefaExcluida.id)
             setTarefas([ ...listaTarefa])
@@ -50,9 +50,6 @@ const Administracao = () => {
                             Descrição
                         </TableCell>
                         <TableCell>
-                            Status
-                        </TableCell>
-                        <TableCell>
                             Editar
                         </TableCell>
                         <TableCell>
@@ -63,17 +60,14 @@ const Administracao = () => {
                 <TableBody>
                     {tarefas.map(Tarefa => <TableRow key={Tarefa.id}>
                         <TableCell>
-                            {Tarefa.Titulo}
+                            {Tarefa.descricao}
                         </TableCell>
                         <TableCell>
-                            {Tarefa.Descricao}
-                        </TableCell>
-                        <TableCell>
-                            {Tarefa.Status}
+                            {Tarefa.observacao}
                         </TableCell>
                          <TableCell>
-                           <Link to={`/Tarefa/${Tarefa.id}`}>
-                           <FaEdit style={{ color: '#9400D3', fontSize: "25px" }} />
+                           <Link to={`/naturezasdelancamento/${Tarefa.id}`}>
+                           <FaEdit style={{ color: '#028971', fontSize: "25px" }} />
                             </Link> 
                     </TableCell> 
                         <TableCell>
