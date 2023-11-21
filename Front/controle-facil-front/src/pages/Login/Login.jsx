@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import http from "../../http/http";
+import React, { useState, useContext } from 'react';
 import "./Login.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Controle from "../../assets/Controle.png";
+import { AuthContext } from '../../context/auth';
 
 import {
   Container,
@@ -13,30 +12,28 @@ import {
 } from '@mui/material';
 
 const Login = () => {
+
+  const { handleLogin } = useContext(AuthContext);
+
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
-  const navigate = useNavigate(); // Hook useNavigate para redirecionamento
+
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault(); // Impede o comportamento padrão de recarregar a página
 
     try {
-      const response = await http.post('/usuarios/login', {
-        email,
-        senha,
-      });
+      // Chame a função de autenticação com os dados do formulário
+      await handleLogin({ email, senha });
 
-      const { token } = response.data;
-
-      localStorage.setItem('token', token);
-
-      // Redirecionamento após login bem-sucedido
-      navigate('/naturezasdelancamento'); // Substitua '/outra-rota' pelo caminho desejado
-
+      // Redirecione para a página após o login
+      
     } catch (error) {
-      console.error('Erro ao fazer o login: ', error);
+      console.error('Erro no login:', error);
     }
   };
+
+  
 
   return (
     <div className="login-container">
@@ -69,7 +66,7 @@ const Login = () => {
               value={senha}
               onChange={(e) => setSenha(e.target.value)}
             />
-            <Button
+            <Button 
               type="submit"
               fullWidth
               variant="contained"
