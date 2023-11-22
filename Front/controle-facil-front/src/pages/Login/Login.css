@@ -26,10 +26,15 @@
   
   .imagem-container {
     flex: 1; /* A imagem ocupa metade da largura */
+    background-color: #07BB9B;
   }
   
   .form-container {
     flex: 1; /* O formulário ocupa a outra metade da largura */
+  }
+
+  .link-cadastro {
+    margin-top: 40px;
   }
 
   img {

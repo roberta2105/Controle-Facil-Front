@@ -3,6 +3,7 @@ import "./Login.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Controle from "../../assets/Controle.png";
 import { AuthContext } from '../../context/auth';
+import { Link } from 'react-router-dom';
 
 import {
   Container,
@@ -10,6 +11,7 @@ import {
   TextField,
   Button,
 } from '@mui/material';
+
 
 const Login = () => {
 
@@ -26,14 +28,13 @@ const Login = () => {
       // Chame a função de autenticação com os dados do formulário
       await handleLogin({ email, senha });
 
-      // Redirecione para a página após o login
+      alert('Login realizado com sucesso!')
       
     } catch (error) {
-      console.error('Erro no login:', error);
+      alert('Email ou seja incorretos!')
+
     }
   };
-
-  
 
   return (
     <div className="login-container">
@@ -66,7 +67,10 @@ const Login = () => {
               value={senha}
               onChange={(e) => setSenha(e.target.value)}
             />
-            <Button 
+            <Button sx={{backgroundColor: '#028971',
+            '&:hover': {
+              backgroundColor: '#028971e0',
+          },}}
               type="submit"
               fullWidth
               variant="contained"
@@ -74,6 +78,8 @@ const Login = () => {
             >
               Entrar
             </Button>
+            <Link className="link-cadastro" to="/cadastro">
+              Ainda não tem uma conta? Cadastre-se</Link>
           </form>
         </Container>
       </div>

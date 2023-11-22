@@ -4,9 +4,7 @@ import { useEffect } from 'react';
 import { Link } from "react-router-dom"
 import { FaEdit } from "react-icons/fa";
 import { RiDeleteBin2Line } from "react-icons/ri";
-import http from "../../http/http"
-
-
+import http from "../../http/http";
 import { Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material"
 
 const Administracao = () => {
@@ -27,6 +25,7 @@ const Administracao = () => {
             .catch(error => console.error('Erro ao buscar tarefas:', error));
     }, []);
 
+    // Função para excluir uma tarefa
     const excluir = (tarefaExcluida) => {
         http.delete(`naturezasdelancamento/${tarefaExcluida.id}`)
         .then(() => {
@@ -35,6 +34,8 @@ const Administracao = () => {
             alert("Tarefa deletada com sucesso!")
         })
     }
+
+
 
 
     return (
@@ -65,16 +66,16 @@ const Administracao = () => {
                         <TableCell>
                             {Tarefa.observacao}
                         </TableCell>
-                         <TableCell>
-                           <Link to={`/naturezasdelancamento/${Tarefa.id}`}>
-                           <FaEdit style={{ color: '#028971', fontSize: "25px" }} />
-                            </Link> 
-                    </TableCell> 
                         <TableCell>
-                        <Button onClick={() => excluir(Tarefa)}>
-                        <RiDeleteBin2Line style={{ color: 'red', fontSize: "25px" }} />
-                        </Button>
-                    </TableCell>
+                            <Link to={`/naturezasdelancamento/${Tarefa.id}`}>
+                                <FaEdit style={{ color: '#028971', fontSize: "25px" }} />
+                            </Link>
+                        </TableCell>
+                        <TableCell>
+                            <Button onClick={() => excluir(Tarefa)}>
+                                <RiDeleteBin2Line style={{ color: 'red', fontSize: "25px" }} />
+                            </Button>
+                        </TableCell>
                     </TableRow>)}
                 </TableBody>
             </Table>

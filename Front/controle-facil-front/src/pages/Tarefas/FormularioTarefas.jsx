@@ -1,6 +1,6 @@
 import { Box, Button, TextField, Typography } from "@mui/material"
 import { useEffect, useState } from "react"
-import { useParams } from "react-router-dom"
+import { useParams, useNavigate } from "react-router-dom";
 import http from "../../http/http"
 
 
@@ -9,6 +9,7 @@ const FormularioTarefas = () => {
     const [nomeTarefa, setNomeTarefa] = useState('')
     const [descricao, setDescricao] = useState('')
 
+    const navigate = useNavigate(); // Hook de navegação
     const parametros = useParams()
 
     useEffect(() => {
@@ -48,6 +49,7 @@ const FormularioTarefas = () => {
             })
                 .then(() => {
                     alert("Tarefa cadastrada com sucesso!")
+                    navigate('/naturezasdelancamento');
                 })
         }
     }
@@ -59,7 +61,7 @@ const FormularioTarefas = () => {
                 <TextField
                     value={nomeTarefa}
                     onChange={evento => setNomeTarefa(evento.target.value)}
-                    label="Nome da Tarefa"
+                    label="Nome do lançamento"
                     variant="standard"
                     fullWidth
                     required
@@ -74,7 +76,10 @@ const FormularioTarefas = () => {
                     required
                     margin="dense"
                 />
-                <Button sx={{ marginTop: 1 }} type="submit" variant="outlined" fullWidth>Enviar</Button>
+                <Button sx={{ marginTop: 1 }}
+                    type="submit"
+                    variant="outlined"
+                    fullWidth>Enviar</Button>
             </Box>
         </Box>
     )

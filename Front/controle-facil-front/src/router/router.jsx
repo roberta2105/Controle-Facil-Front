@@ -4,8 +4,10 @@ import Login from "../pages/Login/Login";
 import PaginaBase from "../pages/PaginaBase";
 import Administracao from "../pages/Tarefas/Administracao";
 import FormularioTarefas from "../pages/Tarefas/FormularioTarefas";
+import Cadastro from "../pages/Cadastro/Cadastro";
 
 import { AuthContext } from "../context/auth";
+
 
 export function Rota() {
   const AuthenticatedRoutes = () => {
@@ -23,6 +25,7 @@ export function Rota() {
           <Route path="naturezasdelancamento" element={<Administracao />} />
           <Route path="naturezasdelancamento/:id" element={<FormularioTarefas />} />
           <Route path="naturezasdelancamento/novo" element={<FormularioTarefas />} />
+         
         </Route>
     </Routes>
        );
@@ -30,7 +33,9 @@ export function Rota() {
         return (
 
         <Routes>
+        <Route path="/" element={<Navigate to="/login" />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/cadastro" element={<Cadastro />} />
         </Routes>
       )}
 }

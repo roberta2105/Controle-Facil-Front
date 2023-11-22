@@ -16,8 +16,12 @@ export const AuthProvider = ({ children }) => {
 
         if (token) {
             http.defaults.headers = {
-                headers: { Authorization: `${token}`, Accept: "application/json" },     
+                Authorization: `Bearer ${token}`,
+                Accept: "application/json",
             };
+            setAuthenticated(true); // Definir como autenticado ao encontrar um token
+        } else {
+            setAuthenticated(false); // Definir como não autenticado se não houver token
         }
 
         setLoading(false);
@@ -32,8 +36,8 @@ export const AuthProvider = ({ children }) => {
             http.defaults.headers.Authorization = `Bearer ${token}`;
             setAuthenticated(true);
 
-            navigate('/naturezasdelancamento'); 
-            
+            navigate('/naturezasdelancamento');
+
         } catch (error) {
             console.error('Erro no login:', error);
             throw new Error('Erro ao autenticar usuário');
@@ -44,6 +48,7 @@ export const AuthProvider = ({ children }) => {
         setAuthenticated(false);
         localStorage.removeItem('token');
         http.defaults.headers.Authorization = undefined;
+        navigate('/login');
     }
 
     return (
