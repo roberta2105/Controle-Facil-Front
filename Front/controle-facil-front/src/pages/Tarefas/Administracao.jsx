@@ -1,6 +1,5 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { useEffect } from 'react';
 import { Link } from "react-router-dom"
 import { FaEdit } from "react-icons/fa";
 import { RiDeleteBin2Line } from "react-icons/ri";
@@ -9,12 +8,6 @@ import { Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, 
 
 const Administracao = () => {
 
-    // const [tarefaData, setTarefaData] = useState({
-    //     id: null,
-    //     Titulo: '',
-    //     Descricao: '',
-    //     Status: ''
-    // });
 
     const [tarefas, setTarefas] = useState([]);
 
@@ -28,15 +21,12 @@ const Administracao = () => {
     // Função para excluir uma tarefa
     const excluir = (tarefaExcluida) => {
         http.delete(`naturezasdelancamento/${tarefaExcluida.id}`)
-        .then(() => {
-            const listaTarefa = tarefas.filter(Tarefa => Tarefa.id !== tarefaExcluida.id)
-            setTarefas([ ...listaTarefa])
-            alert("Tarefa deletada com sucesso!")
-        })
+            .then(() => {
+                const listaTarefa = tarefas.filter(Tarefa => Tarefa.id !== tarefaExcluida.id)
+                setTarefas([...listaTarefa])
+                alert("Tarefa deletada com sucesso!")
+            })
     }
-
-
-
 
     return (
 
@@ -61,7 +51,9 @@ const Administracao = () => {
                 <TableBody>
                     {tarefas.map(Tarefa => <TableRow key={Tarefa.id}>
                         <TableCell>
-                            {Tarefa.descricao}
+                            <Link to={`/receber/${Tarefa.id}`}>
+                                {Tarefa.descricao}
+                            </Link>
                         </TableCell>
                         <TableCell>
                             {Tarefa.observacao}

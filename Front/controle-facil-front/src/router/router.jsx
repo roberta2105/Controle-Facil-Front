@@ -5,8 +5,11 @@ import PaginaBase from "../pages/PaginaBase";
 import Administracao from "../pages/Tarefas/Administracao";
 import FormularioTarefas from "../pages/Tarefas/FormularioTarefas";
 import Cadastro from "../pages/Cadastro/Cadastro";
+import Titulos from "../pages/Titulos/Titulos";
 
 import { AuthContext } from "../context/auth";
+import FormularioReceber from "../pages/Titulos/FormularioReceber";
+
 
 
 export function Rota() {
@@ -25,6 +28,9 @@ export function Rota() {
           <Route path="naturezasdelancamento" element={<Administracao />} />
           <Route path="naturezasdelancamento/:id" element={<FormularioTarefas />} />
           <Route path="naturezasdelancamento/novo" element={<FormularioTarefas />} />
+          <Route path="/receber/:idNaturezaDeLancamento" element={<Titulos />} />
+          <Route path="receber/:id" element={<FormularioReceber />} />
+          <Route path="receber/novo" element={<FormularioReceber />} />
          
         </Route>
     </Routes>

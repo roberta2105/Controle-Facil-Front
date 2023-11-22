@@ -33,9 +33,13 @@ const PaginaBase = () => {
                                     Novo Lançamento
                                 </Button>
                             </Link>
+                            <Link component={RouterLink} to="/receber/novo">
+                                <Button sx={{ my: 1, color: 'white', backgroundColor: '#2fae93db' }}>
+                                    Novo recebimento
+                                </Button>
+                            </Link>
                         </Box>
                         <Box>
-                            {/* ... Seu código existente */}
                             {authenticated && (
                                 <Button sx={{ my: 1, color: 'white', backgroundColor: '#2fae93db' }}
                                     variant="contained"
