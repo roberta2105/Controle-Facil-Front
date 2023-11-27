@@ -37,8 +37,9 @@ const Titulos = () => {
             <Table>
                 <TableHead>
                     <TableRow>
+        
                         <TableCell>
-                            Nome
+                            Recebimento
                         </TableCell>
                         <TableCell>
                             Descrição
@@ -90,7 +91,7 @@ const Titulos = () => {
                             {receber.dataRecebimento}
                         </TableCell>
                         <TableCell>
-                            <Link to={`/receber/${receber.id}`}>
+                            <Link to={`/areceber/:tipo/${receber.id}`}>
                                 <FaEdit style={{ color: '#028971', fontSize: "25px" }} />
                             </Link>
                         </TableCell>

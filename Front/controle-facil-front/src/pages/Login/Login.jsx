@@ -4,12 +4,20 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Controle from "../../assets/Controle.png";
 import { AuthContext } from '../../context/auth';
 import { Link } from 'react-router-dom';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 
 import {
   Container,
   Typography,
   TextField,
   Button,
+  FormControl,
+  InputLabel,
+  OutlinedInput,
+  InputAdornment,
+  IconButton,
+
 } from '@mui/material';
 
 
@@ -19,6 +27,7 @@ const Login = () => {
 
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
+  const [showPassword, setShowPassword] = useState(false); // Estado para controlar a exibição da senha
 
 
   const handleSubmit = async (e) => {
@@ -29,11 +38,19 @@ const Login = () => {
       await handleLogin({ email, senha });
 
       alert('Login realizado com sucesso!')
-      
+
     } catch (error) {
       alert('Email ou seja incorretos!')
 
     }
+  };
+
+  const handleClickShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const handleMouseDownPassword = (e) => {
+    e.preventDefault();
   };
 
   return (
@@ -57,20 +74,40 @@ const Login = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
-            <TextField
+            
+            <FormControl
               variant="outlined"
               margin="normal"
-              type="password"
-              placeholder="Senha"
               required
               fullWidth
               value={senha}
               onChange={(e) => setSenha(e.target.value)}
-            />
-            <Button sx={{backgroundColor: '#028971',
-            '&:hover': {
-              backgroundColor: '#028971e0',
-          },}}
+            >
+              <InputLabel>Senha</InputLabel>
+              <OutlinedInput
+                type={showPassword ? 'text' : 'password'}
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPassword}
+                      onMouseDown={handleMouseDownPassword}
+                      edge="end"
+                    >
+                      {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
+                    </IconButton>
+                  </InputAdornment>
+                }
+                label="Password"
+              />
+            </FormControl>
+
+            <Button sx={{
+              backgroundColor: '#028971',
+              '&:hover': {
+                backgroundColor: '#028971e0',
+              },
+            }}
               type="submit"
               fullWidth
               variant="contained"
@@ -83,7 +120,7 @@ const Login = () => {
           </form>
         </Container>
       </div>
-    </div>
+    </div >
   );
 }
 

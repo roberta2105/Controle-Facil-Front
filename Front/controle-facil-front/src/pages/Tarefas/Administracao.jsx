@@ -35,7 +35,7 @@ const Administracao = () => {
                 <TableHead>
                     <TableRow>
                         <TableCell>
-                            Nome
+                            Lançamento
                         </TableCell>
                         <TableCell>
                             Descrição
@@ -51,7 +51,7 @@ const Administracao = () => {
                 <TableBody>
                     {tarefas.map(Tarefa => <TableRow key={Tarefa.id}>
                         <TableCell>
-                            <Link to={`/receber/${Tarefa.id}`}>
+                            <Link to={`/areceber/${Tarefa.id}`}>
                                 {Tarefa.descricao}
                             </Link>
                         </TableCell>

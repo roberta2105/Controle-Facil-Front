@@ -21,6 +21,7 @@ export const AuthProvider = ({ children }) => {
             };
             setAuthenticated(true); // Definir como autenticado ao encontrar um token
         } else {
+        
             setAuthenticated(false); // Definir como não autenticado se não houver token
         }
 
@@ -47,7 +48,7 @@ export const AuthProvider = ({ children }) => {
     function handleLogout() {
         setAuthenticated(false);
         localStorage.removeItem('token');
-        http.defaults.headers.Authorization = undefined;
+        delete http.defaults.headers.Authorization;
         navigate('/login');
     }
 
