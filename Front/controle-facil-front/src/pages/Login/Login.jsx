@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 
+
 import {
   Container,
   Typography,
@@ -17,8 +18,10 @@ import {
   OutlinedInput,
   InputAdornment,
   IconButton,
+  Alert
 
 } from '@mui/material';
+
 
 
 const Login = () => {
@@ -28,19 +31,25 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
   const [showPassword, setShowPassword] = useState(false); // Estado para controlar a exibição da senha
+  const [loginError, setLoginError] = useState(false);
+  const [loginSucess, setLoginSucess] = useState(false);
 
 
   const handleSubmit = async (e) => {
     e.preventDefault(); // Impede o comportamento padrão de recarregar a página
 
     try {
+      
       // Chame a função de autenticação com os dados do formulário
       await handleLogin({ email, senha });
+      setLoginSucess(true);
 
-      alert('Login realizado com sucesso!')
+    
+      // alert('Login realizado com sucesso!')
 
     } catch (error) {
-      alert('Email ou seja incorretos!')
+      setLoginError(true);
+      // alert('Email ou seja incorretos!')
 
     }
   };
@@ -60,6 +69,22 @@ const Login = () => {
       </div>
       <div className="form-container">
         <Container>
+
+        
+       {loginSucess && (
+        <Alert variant="filled" severity="success">
+          Login realizado com sucesso!
+        </Alert>
+      )} 
+
+        {loginError && (
+        <Alert variant="filled" severity="error">
+          Email ou senha incorretos!
+        </Alert>
+      )}
+
+     
+
           <form className='container p-5 my-5 border formulario' onSubmit={handleSubmit}>
             <Typography className='titulo' component="h1" variant="h3">
               Login

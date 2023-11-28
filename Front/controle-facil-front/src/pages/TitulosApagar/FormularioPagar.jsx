@@ -4,38 +4,40 @@ import { useParams, useNavigate } from "react-router-dom";
 import http from "../../http/http"
 
 
-const FormularioReceber = () => {
+const FormularioPagar = () => {
 
     const [lancamento, setLancamento] = useState('')
     const [lancamentoOptions, setLancamentoOptions] = useState([]);
     const [nome, setNome] = useState('')
     const [descricao, setDescricao] = useState('')
     const [valorOriginal, setValorOriginal] = useState('')
-    const [valorRecebido, setValorRecebido] = useState('')
+    const [valorPago, setValorPago] = useState('')
     const [dataReferencia, setDataReferencia] = useState('')
     const [dataVencimento, setDataVencimento] = useState('')
-    const [dataRecebimento, setDataReceber] = useState('')
+    const [dataPagamento, setDataPagamento] = useState('')
     const [Sucess, setSucess] = useState(false);
     const [SucessCriar, setSucessCriar] = useState(false);
 
     const navigate = useNavigate(); // Hook de navegação
     const parametros = useParams()
+ 
+
 
     useEffect(() => {
         if (parametros.id) {
-            http.get(`/areceber/${parametros.id}/`)
+            http.get(`/apagar/${parametros.id}/`)
                 .then(resposta => {
                     setLancamento(resposta.data.idNaturezaDeLancamento),
                         setNome(resposta.data.descricao),
                         setDescricao(resposta.data.observacao),
                         setValorOriginal(resposta.data.valorOriginal),
-                        setValorRecebido(resposta.data.valorRecebido),
+                        setValorPago(resposta.data.valorPago),
                         setDataReferencia(resposta.data.dataReferencia),
                         setDataVencimento(resposta.data.dataVencimento),
-                        setDataReceber(resposta.data.dataRecebimento)
+                        setDataPagamento(resposta.data.dataPagamento)
                 })
 
-                .catch(error => console.error('Erro ao buscar recebimento:', error));
+                .catch(error => console.error('Erro ao buscar pagamento:', error));
         }
     }, [parametros])
 
@@ -44,22 +46,22 @@ const FormularioReceber = () => {
             .then(resposta => {
                 setLancamentoOptions(resposta.data);
             })
-            .catch(error => console.error('Erro ao buscar lançamento:', error));
+            .catch(error => console.error('Erro ao buscar pagamento:', error));
     }, []);
 
     const SubmeterForm = (evento) => {
         evento.preventDefault()
 
         if (parametros.id) {
-            http.put(`/areceber/${parametros.id}/`, {
+            http.put(`/apagar/${parametros.id}/`, {
                 idNaturezaDeLancamento: lancamento,
                 descricao: nome,
                 observacao: descricao,
                 valorOriginal: valorOriginal,
-                valorRecebido: valorRecebido,
+                valorPago: valorPago,
                 dataReferencia: dataReferencia,
                 dataVencimento: dataVencimento,
-                dataRecebimento: dataRecebimento
+                dataPagamento: dataPagamento
             })
                 .then(() => {
                     setSucess(true);
@@ -67,52 +69,53 @@ const FormularioReceber = () => {
                         setSucess(false);
                         navigate('/naturezasdelancamento');
                     }, 1500); // Tempo em milissegundos
-
                 })
-                .catch(error => console.error('Erro ao na atualização do recebimento:', error));
+                .catch(error => console.error('Erro ao na atualização do pagamento:', error));
 
         } else {
 
-            http.post('/areceber', {
+            http.post('/apagar', {
                 idNaturezaDeLancamento: lancamento,
                 descricao: nome,
                 observacao: descricao,
                 valorOriginal: valorOriginal,
-                valorRecebido: valorRecebido,
+                valorPago: valorPago,
                 dataReferencia: dataReferencia,
                 dataVencimento: dataVencimento,
-                dataRecebimento: dataRecebimento
+                dataPagamento: dataPagamento
             })
                 .then(() => {
-                    setSucessCriar(true);
                     setTimeout(() => {
-                        setSucess(false);
+                        setSucessCriar(true);
+                        setSucessCriar(false);
                         navigate('/naturezasdelancamento');
                     }, 1500); // Tempo em milissegundos
+                    
                 })
-                .catch(error => console.error('Erro ao na cadastro do recebimento:', error));
+                .catch(error => console.error('Erro ao na cadastro do pagamento:', error));
 
         }
     }
 
     return (
         <Box sx={{ display: 'flex', flexDirection: "column", alignItems: "center" }}>
-            <Typography sx={{ marginTop: '6%' }} component="h1" variant="h6">Formulário de Recebimentos</Typography>
+
+            <Typography sx={{ marginTop: '6%' }} component="h1" variant="h6">Formulário de Pagamentos</Typography>
+
             <Box component="form" sx={{ padding: '50px' }} onSubmit={SubmeterForm}>
-
-                {Sucess && (
-                    <Alert variant="filled" severity="success">
-                        <AlertTitle>Sucesso</AlertTitle>
-                        Recebimento atualizado com sucesso!
-                    </Alert>
-                )}
-                {SucessCriar && (
-                    <Alert variant="filled" severity="success">
-                        <AlertTitle>Sucesso</AlertTitle>
-                        Recebimento criado com sucesso!
-                    </Alert>
-                )}
-
+            {Sucess && (
+                <Alert variant="filled" severity="success">
+                    <AlertTitle>Sucesso</AlertTitle>
+                    Pagamento atualizado com sucesso!
+                </Alert>
+            )}
+            {SucessCriar && (
+                <Alert variant="filled" severity="success">
+                    <AlertTitle>Sucesso</AlertTitle>
+                    Pagamento criado com sucesso!
+                </Alert>
+            )}
+            
                 <TextField
                     select
                     value={lancamento}
@@ -132,7 +135,7 @@ const FormularioReceber = () => {
                 <TextField
                     value={nome}
                     onChange={evento => setNome(evento.target.value)}
-                    label="Nome do recebimento"
+                    label="Pagamento"
                     variant="standard"
                     fullWidth
                     required
@@ -157,8 +160,8 @@ const FormularioReceber = () => {
                     margin="dense"
                 />
                 <TextField
-                    value={valorRecebido}
-                    onChange={evento => setValorRecebido(evento.target.value)}
+                    value={valorPago}
+                    onChange={evento => setValorPago(evento.target.value)}
                     label="Valor Recebido"
                     variant="standard"
                     fullWidth
@@ -186,8 +189,8 @@ const FormularioReceber = () => {
                     margin="dense"
                 />
                 <TextField InputLabelProps={{ shrink: true }}
-                    value={dataRecebimento}
-                    onChange={evento => setDataReceber(evento.target.value)}
+                    value={dataPagamento}
+                    onChange={evento => setDataPagamento(evento.target.value)}
                     label="Recebimento"
                     type="datetime-local"
                     variant="standard"
@@ -207,4 +210,4 @@ const FormularioReceber = () => {
 
 }
 
-export default FormularioReceber
+export default FormularioPagar

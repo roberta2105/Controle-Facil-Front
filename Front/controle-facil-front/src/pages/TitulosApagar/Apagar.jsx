@@ -6,50 +6,45 @@ import { FaEdit } from "react-icons/fa";
 import { RiDeleteBin2Line } from "react-icons/ri";
 import { AlertTitle, Alert, Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material"
 
-const Titulos = () => {
-    const [receber, setReceber] = useState([]);
+const TitulosApagar = () => {
+    const [pagar, setPagar] = useState([]);
     const { idNaturezaDeLancamento } = useParams();
     const [Sucess, setSucess] = useState(false);
 
     useEffect(() => {
-        // Carregando os recebimentos
-        http.get(`/areceber?idNaturezaDeLancamento=${idNaturezaDeLancamento}`)
+        http.get(`/apagar?idNaturezaDeLancamento=${idNaturezaDeLancamento}`)
             .then(resposta => {
-                setReceber(resposta.data)
+                setPagar(resposta.data)
             })
-            .catch(error => console.error('Erro ao buscar contas a receber:', error));
+            .catch(error => console.error('Erro ao buscar contas a pagar:', error));
     }, [idNaturezaDeLancamento]);
 
-
-    const excluir = (receberExcluido) => {
-        http.delete(`/areceber/${receberExcluido.id}`)
+    const excluir = (pagarExcluido) => {
+        http.delete(`/apagar/${pagarExcluido.id}`)
             .then(() => {
-                const listaReceber = receber.filter(receber => receber.id !== receberExcluido.id)
-                setReceber([...listaReceber])
+                const listaPagar = pagar.filter(pagar => pagar.id !== pagarExcluido.id)
+                setPagar([...listaPagar])
                 setSucess(true);
                 setTimeout(() => {
                     setSucess(false);
                 }, 1500); // Tempo em milissegundos
             })
-            .catch(error => console.error('Erro ao excluir recebimento', error));
+            .catch(error => console.error('Erro ao excluir o pagamento', error))
     }
 
-
     return (
-
         <TableContainer component={Paper}>
             {Sucess && (
                 <Alert variant="filled" severity="success">
                     <AlertTitle>Sucesso</AlertTitle>
-                    Recebimento deletado com sucesso!
+                    Pagamento deletado com sucesso!
                 </Alert>
             )}
             <Table>
                 <TableHead>
                     <TableRow>
-
                         <TableCell>
-                            Recebimento
+                            Pagamento
                         </TableCell>
                         <TableCell>
                             Descrição
@@ -67,7 +62,7 @@ const Titulos = () => {
                             Data vencimento
                         </TableCell>
                         <TableCell>
-                            Data recebimento
+                            Data pagamento
                         </TableCell>
                         <TableCell>
                             Editar
@@ -78,35 +73,35 @@ const Titulos = () => {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {receber.map(receber => <TableRow key={receber.id}>
+                    {pagar.map(pagar => <TableRow key={pagar.id}>
                         <TableCell>
-                            {receber.descricao}
+                            {pagar.descricao}
                         </TableCell>
                         <TableCell>
-                            {receber.observacao}
+                            {pagar.observacao}
                         </TableCell>
                         <TableCell>
-                            {receber.valorOriginal}
+                            {pagar.valorOriginal}
                         </TableCell>
                         <TableCell>
-                            {receber.valorRecebido}
+                            {pagar.valorPago}
                         </TableCell>
                         <TableCell>
-                            {receber.dataReferencia}
+                            {pagar.dataReferencia}
                         </TableCell>
                         <TableCell>
-                            {receber.dataVencimento}
+                            {pagar.dataVencimento}
                         </TableCell>
                         <TableCell>
-                            {receber.dataRecebimento}
+                            {pagar.dataPagamento}
                         </TableCell>
                         <TableCell>
-                            <Link to={`/areceber/:tipo/${receber.id}`}>
+                            <Link to={`/apagar/:tipo/${pagar.id}`}>
                                 <FaEdit style={{ color: '#028971', fontSize: "25px" }} />
                             </Link>
                         </TableCell>
                         <TableCell>
-                            <Button onClick={() => excluir(receber)}>
+                            <Button onClick={() => excluir(pagar)}>
                                 <RiDeleteBin2Line style={{ color: 'red', fontSize: "25px" }} />
                             </Button>
                         </TableCell>
@@ -115,16 +110,7 @@ const Titulos = () => {
             </Table>
         </TableContainer>
 
-
-
-
-
     )
-
-
-
-
-
 }
 
-export default Titulos
+export default TitulosApagar

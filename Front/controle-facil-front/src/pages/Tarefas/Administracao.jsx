@@ -4,18 +4,19 @@ import { Link } from "react-router-dom"
 import { FaEdit } from "react-icons/fa";
 import { RiDeleteBin2Line } from "react-icons/ri";
 import http from "../../http/http";
-import { Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material"
+import { AlertTitle, Alert, Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material"
 
 const Administracao = () => {
 
 
     const [tarefas, setTarefas] = useState([]);
+    const [Sucess, setSucess] = useState(false);
 
     //Faz uma consulta aos dados de Tarefa
     useEffect(() => {
         http.get('naturezasdelancamento')
             .then(resposta => setTarefas(resposta.data))
-            .catch(error => console.error('Erro ao buscar tarefas:', error));
+            .catch(error => console.error('Erro ao buscar lançamentos:', error));
     }, []);
 
     // Função para excluir uma tarefa
@@ -24,13 +25,24 @@ const Administracao = () => {
             .then(() => {
                 const listaTarefa = tarefas.filter(Tarefa => Tarefa.id !== tarefaExcluida.id)
                 setTarefas([...listaTarefa])
-                alert("Tarefa deletada com sucesso!")
+                setSucess(true);
+                setTimeout(() => {
+                    setSucess(false); 
+                  }, 1500); // Tempo em milissegundos
+
             })
+            .catch(error => console.error('Erro ao buscar lançamentos:', error));
     }
 
     return (
 
         <TableContainer component={Paper}>
+            {Sucess && (
+                <Alert variant="filled" severity="success">
+                    <AlertTitle>Sucesso</AlertTitle>
+                   Lançamento deletado com sucesso!
+                </Alert>
+            )}
             <Table>
                 <TableHead>
                     <TableRow>
@@ -46,14 +58,16 @@ const Administracao = () => {
                         <TableCell>
                             Excluir
                         </TableCell>
+                        <TableCell>
+                        </TableCell>
+                        <TableCell>
+                        </TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
                     {tarefas.map(Tarefa => <TableRow key={Tarefa.id}>
                         <TableCell>
-                            <Link to={`/areceber/${Tarefa.id}`}>
-                                {Tarefa.descricao}
-                            </Link>
+                            {Tarefa.descricao}
                         </TableCell>
                         <TableCell>
                             {Tarefa.observacao}
@@ -67,6 +81,12 @@ const Administracao = () => {
                             <Button onClick={() => excluir(Tarefa)}>
                                 <RiDeleteBin2Line style={{ color: 'red', fontSize: "25px" }} />
                             </Button>
+                        </TableCell>
+                        <TableCell>
+                            <Link to={`/areceber/${Tarefa.id}`}>Recebimentos</Link>
+                        </TableCell>
+                        <TableCell>
+                            <Link to={`/apagar/${Tarefa.id}`}>Pagamentos</Link>
                         </TableCell>
                     </TableRow>)}
                 </TableBody>

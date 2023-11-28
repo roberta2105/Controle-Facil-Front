@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import http from "../../http/http"
-import { Box, Button, TextField, Typography } from "@mui/material";
+import { Alert, AlertTitle, Box, Button, TextField, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 
 
 const Cadastro = () => {
     const [email, setEmail] = useState('');
     const [senha, setSenha] = useState('');
+    const [Sucess, setSucess] = useState(false);
+
+
 
     const SubmeterForm = (evento) => {
         evento.preventDefault();
@@ -18,19 +21,27 @@ const Cadastro = () => {
                 senha: senha
             })
                 .then(() => {
-                    alert("Usuário cadastrado com sucesso!");
+                    setSucess(true);
+                    setTimeout(() => {
+                        setSucess(false);
+                    }, 1500); // Tempo em milissegundos
+
                 })
                 .catch((error) => {
                     console.error('Erro ao cadastrar usuário: ', error);
-                    alert('Erro ao cadastrar usuário');
                 });
-        } else {
-            alert('Por favor, preencha todos os campos');
-        }
+        } 
     }
 
     return (
         <Box sx={{ display: 'flex', flexDirection: "column", alignItems: "center", marginTop: "10%" }}>
+            {Sucess && (
+                <Alert variant="filled" severity="success">
+                    <AlertTitle>Sucesso</AlertTitle>
+                    Cadastro realizado com sucesso!
+                </Alert>
+            )}
+        
             <Typography sx={{ padding: 2, color: '#028971' }} component="h1" variant="h4">Cadastro</Typography>
             <Box component="form" sx={{
                 width: '50%',
@@ -72,7 +83,7 @@ const Cadastro = () => {
                 }}
                 variant="contained"
                 component={Link}
-                to="/login"
+                to="/"
             >
                 Voltar
             </Button>

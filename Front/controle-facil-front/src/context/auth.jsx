@@ -9,6 +9,7 @@ export const AuthProvider = ({ children }) => {
     const [authenticated, setAuthenticated] = useState(false);
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
+    const [userEmail, setUserEmail] = useState('');
 
     //Verifica se existe um token no armazenamento local
     useEffect(() => {
@@ -34,8 +35,10 @@ export const AuthProvider = ({ children }) => {
             const { token } = response.data;
 
             localStorage.setItem('token', token);
+            localStorage.setItem('email', email);
             http.defaults.headers.Authorization = `Bearer ${token}`;
             setAuthenticated(true);
+            setUserEmail(email);
 
             navigate('/naturezasdelancamento');
 
