@@ -42,14 +42,19 @@ const Login = () => {
       
       // Chame a função de autenticação com os dados do formulário
       await handleLogin({ email, senha });
-      setLoginSucess(true);
 
-    
-      // alert('Login realizado com sucesso!')
+        setLoginSucess(true);
+        setTimeout(() => {
+          setLoginSucess(false);
+        }, 1500); // Tempo em milissegundos
+        navigate('/naturezasdelancamento');
+
 
     } catch (error) {
       setLoginError(true);
-      // alert('Email ou seja incorretos!')
+      setTimeout(() => {
+        setLoginError(false);
+      }, 1500); // Tempo em milissegundos
 
     }
   };
@@ -78,8 +83,8 @@ const Login = () => {
       )} 
 
         {loginError && (
-        <Alert variant="filled" severity="error">
-          Email ou senha incorretos!
+        <Alert variant="filled" severity="error" data-test="mensagem-erro">
+          O email digitado é inválido
         </Alert>
       )}
 
@@ -89,10 +94,11 @@ const Login = () => {
             <Typography className='titulo' component="h1" variant="h3">
               Login
             </Typography>
-            <TextField
+            <TextField 
+              data-test="email-input"
               variant="outlined"
               margin="normal"
-              type="text"
+              type="email"
               placeholder="Email"
               required
               fullWidth
@@ -100,11 +106,12 @@ const Login = () => {
               onChange={(e) => setEmail(e.target.value)}
             />
             
-            <FormControl
+            <FormControl 
               variant="outlined"
               margin="normal"
               required
               fullWidth
+              data-test="senha-input"
               value={senha}
               onChange={(e) => setSenha(e.target.value)}
             >
@@ -127,7 +134,8 @@ const Login = () => {
               />
             </FormControl>
 
-            <Button sx={{
+            <Button data-test="botao-enviar"
+             sx={{
               backgroundColor: '#028971',
               '&:hover': {
                 backgroundColor: '#028971e0',
@@ -140,7 +148,7 @@ const Login = () => {
             >
               Entrar
             </Button>
-            <Link className="link-cadastro" to="/cadastro">
+            <Link data-test='botao-cadastro' className="link-cadastro" to="/cadastro">
               Ainda não tem uma conta? Cadastre-se</Link>
           </form>
         </Container>

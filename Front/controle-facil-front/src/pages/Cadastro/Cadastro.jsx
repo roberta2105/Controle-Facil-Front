@@ -36,9 +36,8 @@ const Cadastro = () => {
     return (
         <Box sx={{ display: 'flex', flexDirection: "column", alignItems: "center", marginTop: "10%" }}>
             {Sucess && (
-                <Alert variant="filled" severity="success">
-                    <AlertTitle>Sucesso</AlertTitle>
-                    Cadastro realizado com sucesso!
+                <Alert variant="filled" severity="success" data-test="mensagem-sucesso">
+                    Usuário cadastrado com sucesso!
                 </Alert>
             )}
         
@@ -53,6 +52,7 @@ const Cadastro = () => {
                 borderRadius: '5px'
             }} onSubmit={SubmeterForm}>
                 <TextField
+                    data-test="email-input"
                     value={email}
                     onChange={evento => setEmail(evento.target.value)}
                     label="Digite o seu Email"
@@ -62,6 +62,7 @@ const Cadastro = () => {
                     margin="dense"
                 />
                 <TextField
+                    data-test="senha-input"
                     value={senha}
                     onChange={evento => setSenha(evento.target.value)}
                     label="Digite a sua Senha"
@@ -70,7 +71,7 @@ const Cadastro = () => {
                     required
                     margin="dense"
                 />
-                <Button sx={{ marginTop: 1 }} type="submit" variant="outlined" fullWidth>Enviar</Button>
+                <Button data-test="botao-enviar" sx={{ marginTop: 1 }} type="submit" variant="outlined" fullWidth>Enviar</Button>
             </Box>
             <Button
                 sx={{
